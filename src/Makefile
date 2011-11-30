@@ -17,11 +17,12 @@ MAINCLASS = Main
 #
 
 CLASSES = \
-	  Main.java \
 	  scheduling/Operation.java \
 	  scheduling/Ressource.java \
 	  scheduling/RessourceGraph.java \
 	  scheduling/ProblemGraph.java \
+	  scheduling/SchedulingProblem.java \
+	  Main.java \
 
 
 

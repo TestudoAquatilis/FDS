@@ -35,6 +35,16 @@ public class Operation
 		return m_start_latest;
 	}
 
+	public int endSoonest ()
+	{
+		return m_start_soonest + m_latency;
+	}
+
+	public int endLatest ()
+	{
+		return m_start_latest + m_latency;
+	}
+
 	public int mobility ()
 	{
 		return m_start_latest - m_start_soonest;

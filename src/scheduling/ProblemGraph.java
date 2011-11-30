@@ -23,9 +23,11 @@ public class ProblemGraph
 		m_successor_map.put   (operation, new TreeSet <Operation> ());
 	}
 
-	public void addEdge (Operation predecessor, Operation successor)
+	public boolean addEdge (Operation predecessor, Operation successor)
 	{
-		TreeSet <Operation> predecessor_set;
+		if (predecessor.equals (successor)) return false;
+
+		// add successor as successor of predecessor
 		TreeSet <Operation> successor_set;
 
 		if (m_operations.contains (predecessor)) {
@@ -40,6 +42,9 @@ public class ProblemGraph
 
 		successor_set.add (successor);
 
+		// add predecessor as predecessor of successor
+		TreeSet <Operation> predecessor_set;
+
 		if (m_operations.contains (successor)) {
 			predecessor_set = m_predecessor_map.get (successor);
 		} else {
@@ -51,5 +56,7 @@ public class ProblemGraph
 		}
 
 		predecessor_set.add (predecessor);
+
+		return true;
 	}
 }
