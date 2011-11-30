@@ -60,7 +60,38 @@ public class ProblemGraph
 		return true;
 	}
 	
+	//calculate soonest and latest start for every operation via ALAP and ASAP
 	public boolean calculateMobility(){
+		TreeSet <Operation> unplannedOperations = m_operations;
+		Iterator<Operation> itr;
+		Operation selectedOperation;
+		int Lmax=1;
+		
+		//ASAP
+		//set all soonestStarts to 0 for operations without predecessor
+		itr = unplannedOperations.iterator();											
+		while(itr.hasNext()){
+			selectedOperation = itr.next();		
+			
+			if(m_predecessor_map.get(selectedOperation).isEmpty()){							//FOREACH (vi without predecessor)
+				selectedOperation.setStartSoonest(0);										//tau(vi):=0;
+				unplannedOperations.remove(selectedOperation);						
+			}
+		}
+		
+		//ALAP
+		unplannedOperations = m_operations;
+		//set all latestStarts to Lmax-di for operations without successor
+		itr = unplannedOperations.iterator();												//"reset" iterator
+
+		while(itr.hasNext()){
+			selectedOperation = itr.next();
+			
+			if(m_successor_map.get(selectedOperation).isEmpty()){							//FOREACH (vi without successor)
+				selectedOperation.setStartLatest(Lmax-selectedOperation.getLatency());		//tau(vi):=Lmax-di;
+				unplannedOperations.remove(selectedOperation);
+			}
+		}
 		return true;
 	}
 
