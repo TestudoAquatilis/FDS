@@ -60,11 +60,8 @@ public class ProblemGraph
 		return true;
 	}
 	
-	public boolean calculateASAP(){
+	public boolean calculateMobility(){
 		return true;
 	}
-	
-	public boolean calculateALAP(){
-		return true;
-	}
+
 }
