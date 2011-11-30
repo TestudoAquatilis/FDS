@@ -29,12 +29,22 @@ public class Operation
 	{
 		return m_start_soonest;
 	}
+	
+	public void startSoonestSet (int m_start_soonest)
+	{
+		this.m_start_soonest = m_start_soonest;
+	}
 
 	public int startLatest ()
 	{
 		return m_start_latest;
 	}
 
+	public void startLatestSet (int m_start_latest)
+	{
+		this.m_start_latest=m_start_latest;
+	}
+	
 	public int endSoonest ()
 	{
 		return m_start_soonest + m_latency;
