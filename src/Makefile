@@ -7,9 +7,9 @@
 JFLAGS = 
 JC = javac
 
-OUTPUTJAR = edgematching.jar
+OUTPUTJAR = fds.jar
 MANIFEST = Manifest.txt
-MAINCLASS = edgematching/Main
+MAINCLASS = Main
 
 
 #
