@@ -20,42 +20,47 @@ public class Operation
 		m_start_latest  = 0;
 	}
 
-	public int id ()
+	public int getId ()
 	{
 		return m_id;
 	}
+	
+	public int getLatency ()
+	{
+		return m_latency;
+	}
 
-	public int startSoonest ()
+	public int getStartSoonest ()
 	{
 		return m_start_soonest;
 	}
 	
-	public void startSoonestSet (int m_start_soonest)
+	public void setStartSoonest (int m_start_soonest)
 	{
 		this.m_start_soonest = m_start_soonest;
 	}
 
-	public int startLatest ()
+	public int getStartLatest ()
 	{
 		return m_start_latest;
 	}
 
-	public void startLatestSet (int m_start_latest)
+	public void setStartLatest (int m_start_latest)
 	{
 		this.m_start_latest=m_start_latest;
 	}
 	
-	public int endSoonest ()
+	public int getEndSoonest ()
 	{
 		return m_start_soonest + m_latency;
 	}
 
-	public int endLatest ()
+	public int getEndLatest ()
 	{
 		return m_start_latest + m_latency;
 	}
 
-	public int mobility ()
+	public int getMobility ()
 	{
 		return m_start_latest - m_start_soonest;
 	}
