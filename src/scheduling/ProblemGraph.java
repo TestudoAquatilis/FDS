@@ -59,4 +59,12 @@ public class ProblemGraph
 
 		return true;
 	}
+	
+	public boolean calculateASAP(){
+		return true;
+	}
+	
+	public boolean calculateALAP(){
+		return true;
+	}
 }
