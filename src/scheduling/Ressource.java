@@ -12,7 +12,7 @@ public class Ressource
 		m_id = ressource_id;
 	}
 
-	public int id ()
+	public int getId ()
 	{
 		return m_id;
 	}
