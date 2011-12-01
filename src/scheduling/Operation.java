@@ -35,9 +35,9 @@ public class Operation
 		return m_start_soonest;
 	}
 	
-	public void setStartSoonest (int m_start_soonest)
+	public void setStartSoonest (int startSoonest)
 	{
-		this.m_start_soonest = m_start_soonest;
+		m_start_soonest = startSoonest;
 	}
 
 	public int getStartLatest ()
@@ -45,9 +45,9 @@ public class Operation
 		return m_start_latest;
 	}
 
-	public void setStartLatest (int m_start_latest)
+	public void setStartLatest (int startLatest)
 	{
-		this.m_start_latest=m_start_latest;
+		m_start_latest = startLatest;
 	}
 	
 	public int getEndSoonest ()
