@@ -74,8 +74,7 @@ public class ProblemGraph
 			selectedOperation = itr.next();		
 			
 			if(m_predecessor_map.get(selectedOperation).isEmpty()){							//FOREACH (vi without predecessor)
-				selectedOperation.setStartSoonest(0);										//tau(vi):=0;
-				unplannedOperations.remove(selectedOperation);						
+				unplannedOperations.remove(selectedOperation);								//tau(vi):=0; (initial=0)
 			}
 		}
 		
