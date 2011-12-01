@@ -63,6 +63,8 @@ public class ProblemGraph
 	//calculate soonest and latest start for every operation via ALAP and ASAP
 	public boolean calculateMobility(){
 		TreeSet <Operation> unplannedOperations;
+		boolean allPredPlanned;
+		boolean allSuccPlanned;
 		
 		unplannedOperations = new TreeSet <Operation> ();
 		unplannedOperations.addAll (m_operations);
@@ -71,8 +73,34 @@ public class ProblemGraph
 		//ASAP
 		//set all soonestStarts to 0 for operations without predecessor
 		for (Operation selectedOperation : unplannedOperations) {
-			if(m_predecessor_map.get(selectedOperation).isEmpty()){							//FOREACH (vi without predecessor)
-				unplannedOperations.remove(selectedOperation);								//tau(vi):=0; (initial=0)
+			//FOREACH (vi without predecessor)
+			if(m_predecessor_map.get(selectedOperation).isEmpty()){		
+				//tau(vi):=0; (initial=0)
+				unplannedOperations.remove(selectedOperation);								
+			}
+		}
+		//calculate soonestStarts of all remaining operations
+		while(!unplannedOperations.isEmpty()){
+			for (Operation selectedOperation : unplannedOperations) {
+				//assumption: all predecessors planned
+				allPredPlanned = true;															
+				
+				//test if all predecessors planned
+				for (Operation selectedPredOperation : m_predecessor_map.get(selectedOperation)) {
+					if(unplannedOperations.contains(selectedPredOperation)){
+						allPredPlanned = false;
+					}
+				}
+				//tau(vi) = max(vj + dj)
+				if(allPredPlanned){
+					selectedOperation.setStartSoonest(calcSoonestPossibleStart(selectedOperation));
+						//successive calculation of entire latency Lmax (needed for ALAP)
+						if(selectedOperation.getEndSoonest() > Lmax){
+							Lmax = selectedOperation.getEndSoonest();
+						}
+					unplannedOperations.remove(selectedOperation);
+				}
+				
 			}
 		}
 		
@@ -81,12 +109,62 @@ public class ProblemGraph
 		unplannedOperations.addAll (m_operations);
 		//set all latestStarts to Lmax-di for operations without successor
 		for (Operation selectedOperation : unplannedOperations) {
-			if(m_successor_map.get(selectedOperation).isEmpty()){							//FOREACH (vi without successor)
-				selectedOperation.setStartLatest(Lmax-selectedOperation.getLatency());		//tau(vi):=Lmax-di;
+			//FOREACH (vi without successor)
+			if(m_successor_map.get(selectedOperation).isEmpty()){					
+				//tau(vi):=Lmax-di;
+				selectedOperation.setStartLatest(Lmax-selectedOperation.getLatency());
 				unplannedOperations.remove(selectedOperation);
 			}
 		}
+		//calculate latestStarts of all remaining operations
+		while(!unplannedOperations.isEmpty()){
+			for (Operation selectedOperation : unplannedOperations) {
+				//assumption: all successors planned
+				allSuccPlanned = true;															
+				
+				//test if all successors planned
+				for (Operation selectedSuccOperation : m_successor_map.get(selectedOperation)) {
+					if(unplannedOperations.contains(selectedSuccOperation)){
+						allSuccPlanned = false;
+					}
+				}
+				//tau(vi) = min(vj) - di
+				if(allSuccPlanned){
+					selectedOperation.setStartLatest(calcLatestPossibleEnd(selectedOperation)-selectedOperation.getLatency());
+					unplannedOperations.remove(selectedOperation);
+				}
+				
+			}
+		}
+		
 		return true;
+	}
+	
+	//calculates the latest possible end of operation op according to its successors
+	private int calcLatestPossibleEnd(Operation selectedOperation) {
+		//set latest start of first successor in TreeSet as default
+		int min_t = m_successor_map.get(selectedOperation).first().getStartLatest();
+			
+		for (Operation succOperation : m_successor_map.get(selectedOperation)) {
+			if(succOperation.getStartLatest() < min_t){
+				min_t = succOperation.getStartLatest();
+			}
+		}
+		
+		return min_t;
+	}
+
+	//calculates the soonest possible start of operation op according to its predecessors
+	private int calcSoonestPossibleStart(Operation selectedOperation) {
+		int max_t=0;
+		
+		for (Operation predOperation : m_predecessor_map.get(selectedOperation)) {
+			if(predOperation.getEndSoonest() > max_t){
+				max_t = predOperation.getEndSoonest();
+			}
+		}
+		
+		return max_t;
 	}
 
 }
