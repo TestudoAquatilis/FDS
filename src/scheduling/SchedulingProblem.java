@@ -128,6 +128,8 @@ public class SchedulingProblem
 			return false;
 		}
 
+		line_scanner.findInLine ("->");
+
 		if (line_scanner.hasNextInt ()) {
 			ressource_id = line_scanner.nextInt ();
 		} else {
@@ -162,6 +164,8 @@ public class SchedulingProblem
 		} else {
 			return false;
 		}
+		
+		line_scanner.findInLine ("->");
 
 		if (line_scanner.hasNextInt ()) {
 			successor_id = line_scanner.nextInt ();

@@ -5,7 +5,7 @@ t <overall time-steps>
 o <operation-id> <latency of operation>
 
 # problem graph edge:
-d <predecessor-operation-id> <successor-operation-id>
+d <predecessor-operation-id> -> <successor-operation-id>
 
 # ressource graph edge:
-r <operation-id> <ressource-id>
+r <operation-id> -> <ressource-id>
