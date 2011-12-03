@@ -6,6 +6,10 @@ public class ProblemGraph
 {
 	protected TreeSet <Operation> m_operations;
 
+	public TreeSet<Operation> operations() {
+		return m_operations;
+	}
+
 	protected TreeMap <Operation, TreeSet <Operation>> m_successor_map;
 	protected TreeMap <Operation, TreeSet <Operation>> m_predecessor_map;
 
@@ -15,6 +19,13 @@ public class ProblemGraph
 		m_successor_map   = new TreeMap <Operation, TreeSet <Operation>> ();
 		m_predecessor_map = new TreeMap <Operation, TreeSet <Operation>> ();
 	}
+	
+	public TreeMap<Operation, TreeSet<Operation>> predecessor_map() {
+		return m_predecessor_map;
+	}
+	public TreeMap<Operation, TreeSet<Operation>> successor_map() {
+		return m_successor_map;
+	}	
 
 	public void addVertex (Operation operation)
 	{
@@ -67,25 +78,29 @@ public class ProblemGraph
 		boolean allSuccPlanned;
 		
 		unplannedOperations = new TreeSet <Operation> ();
-		unplannedOperations.addAll (m_operations);
+		unplannedOperations.addAll(m_operations);
 		int Lmax=1;
 		
 		//ASAP
 		//set all soonestStarts to 0 for operations without predecessor
-		for (Operation selectedOperation : unplannedOperations) {
+		for (Iterator<Operation> iter = unplannedOperations.iterator(); iter.hasNext();) {
+			Operation selectedOperation = iter.next();
 			//FOREACH (vi without predecessor)
 			if(m_predecessor_map.get(selectedOperation).isEmpty()){		
 				//tau(vi):=0; (initial=0)
-				unplannedOperations.remove(selectedOperation);								
+				selectedOperation.setStartLatest(0);
+				iter.remove();								
 			}
 		}
 		//calculate soonestStarts of all remaining operations
-		while(!unplannedOperations.isEmpty()){
-			for (Operation selectedOperation : unplannedOperations) {
+		//while(!unplannedOperations.isEmpty()){
+			for (Iterator<Operation> iter = unplannedOperations.iterator(); iter.hasNext();) {
+				Operation selectedOperation = iter.next();
 				//assumption: all predecessors planned
 				allPredPlanned = true;															
 				
 				//test if all predecessors planned
+				
 				for (Operation selectedPredOperation : m_predecessor_map.get(selectedOperation)) {
 					if(unplannedOperations.contains(selectedPredOperation)){
 						allPredPlanned = false;
@@ -98,12 +113,12 @@ public class ProblemGraph
 						if(selectedOperation.getEndSoonest() > Lmax){
 							Lmax = selectedOperation.getEndSoonest();
 						}
-					unplannedOperations.remove(selectedOperation);
+					iter.remove();
 				}
 				
 			}
-		}
-		
+		//}
+		/*
 		//ALAP
 		unplannedOperations = new TreeSet <Operation> ();
 		unplannedOperations.addAll (m_operations);
@@ -136,7 +151,7 @@ public class ProblemGraph
 				
 			}
 		}
-		
+		*/
 		return true;
 	}
 	
