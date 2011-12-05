@@ -216,7 +216,7 @@ public class SchedulingProblem
 	public void calculateFDSScheduling (int l_max)
 	{
 		while (true) {
-			m_problem_graph.calculateMobility (); // TODO: (l_max)
+			m_problem_graph.calculateMobility (m_timing_constraint); 
 
 			TreeSet <Operation> plannable_operations = m_problem_graph.getPlannableOperations ();
 
@@ -248,5 +248,9 @@ public class SchedulingProblem
 			min_operation.setStartLatest  (min_time);
 			min_operation.setFixed ();
 		}
+	}
+	
+	public int getTimingConstraint() {
+		return m_timing_constraint;
 	}
 }
