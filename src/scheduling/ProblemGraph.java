@@ -6,6 +6,8 @@ public class ProblemGraph
 {
 	protected TreeSet <Operation> m_operations;
 
+	protected int m_l_max;
+
 	public TreeSet<Operation> operations() {
 		return m_operations;
 	}
@@ -69,6 +71,11 @@ public class ProblemGraph
 		predecessor_set.add (predecessor);
 
 		return true;
+	}
+
+	public int getLMax ()
+	{
+		return m_l_max;
 	}
 	
 	//calculate soonest and latest start for every operation via ALAP and ASAP
@@ -154,11 +161,13 @@ public class ProblemGraph
 			}
 			}
 
+		m_l_max = Lmax;
+
 		return true;
 	}
 	
 	//calculates the latest possible end of operation op according to its successors
-	private int calcLatestPossibleEnd(Operation selectedOperation) {
+	protected int calcLatestPossibleEnd(Operation selectedOperation) {
 		//set latest start of first successor in TreeSet as default
 		int min_t = m_successor_map.get(selectedOperation).first().getStartLatest();
 			
@@ -172,7 +181,7 @@ public class ProblemGraph
 	}
 
 	//calculates the soonest possible start of operation op according to its predecessors
-	private int calcSoonestPossibleStart(Operation selectedOperation) {
+	protected int calcSoonestPossibleStart(Operation selectedOperation) {
 		int max_t=0;
 		
 		for (Operation predOperation : m_predecessor_map.get(selectedOperation)) {

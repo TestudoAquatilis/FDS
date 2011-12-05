@@ -65,6 +65,16 @@ public class Operation
 		return m_start_latest - m_start_soonest;
 	}
 
+	public double getProbability (int Timestep)
+	{
+		if (Timestep > m_start_latest) return 0;
+		if (Timestep < m_start_soonest) return 0;
+
+		double result = 1.0 / (double) (getMobility () + 1);
+
+		return result;
+	}
+
 	public int hashCode ()
 	{
 		return m_id;

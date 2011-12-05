@@ -41,4 +41,26 @@ public class RessourceGraph
 
 		return true;
 	}
+
+	public double getRessourceUsage (Ressource ressource, int timestep)
+	{
+		if (! m_ressources.contains (ressource)) return 0;
+
+		TreeSet <Operation> operations = m_predecessors.get (ressource);
+
+		double result = 0;
+
+		for (Operation i_op : operations) {
+			result += i_op.getProbability (timestep);
+		}
+		
+		return result;
+	}
+
+	public Set <Ressource> getRessources ()
+	{
+		Object result = m_ressources.clone ();
+
+		return (TreeSet <Ressource>) result;
+	}
 }
