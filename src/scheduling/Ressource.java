@@ -44,7 +44,7 @@ public class Ressource
 
 		if (ressource.m_id < m_id) return 1;
 
-		if (ressource.m_id > m_id) return 0;
+		if (ressource.m_id > m_id) return -1;
 
 		return 0;
 	}

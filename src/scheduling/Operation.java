@@ -92,7 +92,7 @@ public class Operation
 
 		if (operation.m_id < m_id) return 1;
 
-		if (operation.m_id > m_id) return 0;
+		if (operation.m_id > m_id) return -1;
 
 		return 0;
 	}

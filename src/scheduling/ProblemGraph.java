@@ -93,7 +93,7 @@ public class ProblemGraph
 			}
 		}
 		//calculate soonestStarts of all remaining operations
-		//while(!unplannedOperations.isEmpty()){
+		while(!unplannedOperations.isEmpty()){
 			for (Iterator<Operation> iter = unplannedOperations.iterator(); iter.hasNext();) {
 				Operation selectedOperation = iter.next();
 				//assumption: all predecessors planned
@@ -117,26 +117,28 @@ public class ProblemGraph
 				}
 				
 			}
-		//}
-		/*
+		}
+		
 		//ALAP
 		unplannedOperations = new TreeSet <Operation> ();
 		unplannedOperations.addAll (m_operations);
 		//set all latestStarts to Lmax-di for operations without successor
-		for (Operation selectedOperation : unplannedOperations) {
+		for (Iterator<Operation> iter = unplannedOperations.iterator(); iter.hasNext();) {
+			Operation selectedOperation = iter.next ();
 			//FOREACH (vi without successor)
 			if(m_successor_map.get(selectedOperation).isEmpty()){					
 				//tau(vi):=Lmax-di;
 				selectedOperation.setStartLatest(Lmax-selectedOperation.getLatency());
-				unplannedOperations.remove(selectedOperation);
+				iter.remove ();
 			}
 		}
 		//calculate latestStarts of all remaining operations
 		while(!unplannedOperations.isEmpty()){
-			for (Operation selectedOperation : unplannedOperations) {
+			for (Iterator<Operation> iter = unplannedOperations.iterator(); iter.hasNext();) {
+				Operation selectedOperation = iter.next ();
 				//assumption: all successors planned
 				allSuccPlanned = true;															
-				
+
 				//test if all successors planned
 				for (Operation selectedSuccOperation : m_successor_map.get(selectedOperation)) {
 					if(unplannedOperations.contains(selectedSuccOperation)){
@@ -146,12 +148,12 @@ public class ProblemGraph
 				//tau(vi) = min(vj) - di
 				if(allSuccPlanned){
 					selectedOperation.setStartLatest(calcLatestPossibleEnd(selectedOperation)-selectedOperation.getLatency());
-					unplannedOperations.remove(selectedOperation);
+					iter.remove ();
 				}
-				
+
 			}
-		}
-		*/
+			}
+
 		return true;
 	}
 	
