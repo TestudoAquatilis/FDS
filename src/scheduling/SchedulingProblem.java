@@ -213,7 +213,7 @@ public class SchedulingProblem
 		return m_ressource_graph;
 	}
 
-	public void calculateFDSScheduling (int l_max)
+	public void calculateFDSScheduling ()
 	{
 		while (true) {
 			m_problem_graph.calculateMobility (m_timing_constraint); 
@@ -228,9 +228,10 @@ public class SchedulingProblem
 
 			for (Operation i_plannable_operation : plannable_operations) {
 				for (int i_time = i_plannable_operation.getStartSoonest (); i_time <= i_plannable_operation.getStartLatest (); i_time ++) {
-					double current_force = 0; //...TODO: calculate forces...
+					double current_force = m_ressource_graph.getSelfForce (i_plannable_operation, i_time); 
+
 					//TODO: compute sum of forces of v_i
-					//
+
 					if (current_force < min_force) {
 						min_force     = current_force;
 						min_time      = i_time;

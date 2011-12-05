@@ -62,14 +62,18 @@ public class Main
 			System.err.println (current_line);
 		}
 
+		System.err.println("--------------------------------");
+		System.err.println("FDS Scheduling result ..........");
+		System.err.println("--------------------------------");
+		
 		// calculate scheduling ... if this works we get a cake
-		m_scheduling_problem.calculateFDSScheduling (10);
+		m_scheduling_problem.calculateFDSScheduling ();
 
 		// test result:
 		Set <Operation> operations = m_scheduling_problem.operations ();
 
 		for (Operation i_operation : operations) {
-			System.out.println ("Operation " + i_operation.getId () + ": soonest start at " + i_operation.getStartSoonest () + ", latest start at " + i_operation.getStartLatest ());
+			System.out.println ("Operation " + i_operation.getId () + ": start at " + i_operation.getStartSoonest ());
 		}
 	}
 }
