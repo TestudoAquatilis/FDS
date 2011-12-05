@@ -62,9 +62,9 @@ public class Main
 			System.err.println (current_line);
 		}
 
-		System.err.println("--------------------------------");
-		System.err.println("FDS Scheduling result ..........");
-		System.err.println("--------------------------------");
+		System.out.println("--------------------------------");
+		System.out.println("FDS Scheduling result ..........");
+		System.out.println("--------------------------------");
 		
 		// calculate scheduling ... if this works we get a cake
 		m_scheduling_problem.calculateFDSScheduling ();
@@ -74,6 +74,41 @@ public class Main
 
 		for (Operation i_operation : operations) {
 			System.out.println ("Operation " + i_operation.getId () + ": start at " + i_operation.getStartSoonest ());
+		}
+
+		// nicer print:
+		System.out.println("--------------------------------");
+		System.out.println("FDS Scheduling result ..........");
+		System.out.println("--------------------------------");
+		
+		TreeMap <Integer, TreeSet <Operation>> fds_scheduling = new TreeMap <Integer, TreeSet <Operation>> ();
+		for (int i_time = 0; i_time < m_scheduling_problem.getTimingConstraint (); i_time ++) {
+			fds_scheduling.put (i_time, new TreeSet <Operation> ());
+		}
+
+		for (Operation i_op : operations) {
+			TreeSet <Operation> scheduling_at_time = fds_scheduling.get (i_op.getStartSoonest ());
+
+			scheduling_at_time.add (i_op);
+		}
+
+		for (int i_time = 0; i_time < m_scheduling_problem.getTimingConstraint (); i_time ++) {
+			TreeSet <Operation> scheduling_at_time = fds_scheduling.get (i_time);
+
+			String current_line = "Time " + i_time + ":";
+
+			for (Operation i_op : scheduling_at_time) {
+				current_line += " " + i_op.getId ();
+			}
+
+			current_line += "  ---  Ressource usage: ";
+
+			for (Ressource i_res : ressources) {
+				current_line += " r" + i_res.getId () + ": ";
+				current_line += m_scheduling_problem.ressourceGraph ().getRessourceUsage (i_res, i_time) + ";";
+			}
+
+			System.out.println (current_line);
 		}
 	}
 }
