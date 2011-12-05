@@ -212,4 +212,41 @@ public class SchedulingProblem
 	{
 		return m_ressource_graph;
 	}
+
+	public void calculateFDSScheduling (int l_max)
+	{
+		while (true) {
+			m_problem_graph.calculateMobility (); // TODO: (l_max)
+
+			TreeSet <Operation> plannable_operations = m_problem_graph.getPlannableOperations ();
+
+			if (plannable_operations.size () <= 0) break;
+
+			double    min_force     = Double.MAX_VALUE;
+			Operation min_operation = null;
+			int       min_time      = -1;
+
+			for (Operation i_plannable_operation : plannable_operations) {
+				for (int i_time = i_plannable_operation.getStartSoonest (); i_time <= i_plannable_operation.getStartLatest (); i_time ++) {
+					double current_force = 0; //...TODO: calculate forces...
+					//TODO: compute sum of forces of v_i
+					//
+					if (current_force < min_force) {
+						min_force     = current_force;
+						min_time      = i_time;
+						min_operation = i_plannable_operation;
+					}
+				}
+			}
+
+			if (min_time < 0) {
+				System.err.println ("FDS-Scheduling - no plannable operation - This should never happen!!!");
+				System.exit (1);
+			}
+
+			min_operation.setStartSoonest (min_time);
+			min_operation.setStartLatest  (min_time);
+			min_operation.setFixed ();
+		}
+	}
 }

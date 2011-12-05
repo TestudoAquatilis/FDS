@@ -77,6 +77,20 @@ public class ProblemGraph
 	{
 		return m_l_max;
 	}
+
+	public TreeSet <Operation> getPlannableOperations ()
+	{
+		TreeSet <Operation> result = new TreeSet <Operation> ();
+
+		for (Operation i_op : m_operations) {
+			if (i_op.getFixed ()) continue;
+			if (i_op.getMobility () <= 0) continue;
+
+			result.add (i_op);
+		}
+
+		return result;
+	}
 	
 	//calculate soonest and latest start for every operation via ALAP and ASAP
 	public boolean calculateMobility(){
@@ -86,6 +100,7 @@ public class ProblemGraph
 		
 		unplannedOperations = new TreeSet <Operation> ();
 		unplannedOperations.addAll(m_operations);
+		//unplannedOperations = getPlannableOperations ();
 		int Lmax=1;
 		
 		//ASAP

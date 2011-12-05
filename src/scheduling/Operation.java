@@ -8,21 +8,40 @@ public class Operation
 	protected int m_id;
 	protected int m_latency;
 
+	protected boolean m_fixed;
+
 	protected int m_start_soonest;
 	protected int m_start_latest;
 
 	public Operation (int operation_id, int latency)
 	{
 		m_id       = operation_id;
-		m_latency = latency;
+		m_latency  = latency;
+
+		m_fixed    = false;
 
 		m_start_soonest = 0;
-		m_start_latest  = 0;
+		m_start_latest  = Integer.MAX_VALUE;
 	}
 
 	public int getId ()
 	{
 		return m_id;
+	}
+
+	public boolean getFixed ()
+	{
+		return m_fixed;
+	}
+
+	public void setFixed ()
+	{
+		m_fixed = true;
+	}
+
+	public void setNotFixed ()
+	{
+		m_fixed = false;
 	}
 	
 	public int getLatency ()
