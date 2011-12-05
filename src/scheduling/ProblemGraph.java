@@ -93,15 +93,22 @@ public class ProblemGraph
 	}
 	
 	//calculate soonest and latest start for every operation via ALAP and ASAP
-	public boolean calculateMobility(){
+	public boolean calculateMobility(int Lmax){
 		TreeSet <Operation> unplannedOperations;
 		boolean allPredPlanned;
 		boolean allSuccPlanned;
 		
 		unplannedOperations = new TreeSet <Operation> ();
 		unplannedOperations.addAll(m_operations);
-		//unplannedOperations = getPlannableOperations ();
-		int Lmax=1;
+		int test_Lmax=1;
+		
+		//remove all via FDS fixed operations from 'unplanned operations'
+		for (Iterator<Operation> iter = unplannedOperations.iterator(); iter.hasNext();){
+			Operation op = iter.next();
+				if(op.getFixed() == true){
+					iter.remove();
+				}
+		}
 		
 		//ASAP
 		//set all soonestStarts to 0 for operations without predecessor
@@ -131,9 +138,9 @@ public class ProblemGraph
 				//tau(vi) = max(vj + dj)
 				if(allPredPlanned){
 					selectedOperation.setStartSoonest(calcSoonestPossibleStart(selectedOperation));
-						//successive calculation of entire latency Lmax (needed for ALAP)
-						if(selectedOperation.getEndSoonest() > Lmax){
-							Lmax = selectedOperation.getEndSoonest();
+						//successive calculation of entire latency test_Lmax (needed for ALAP)
+						if(selectedOperation.getEndSoonest() > test_Lmax){
+							test_Lmax = selectedOperation.getEndSoonest();
 						}
 					iter.remove();
 				}
@@ -141,9 +148,24 @@ public class ProblemGraph
 			}
 		}
 		
+		//test if time constraint is long enough to execute ALAP
+		if(Lmax < test_Lmax){
+			System.err.println("Time constraint too short to solve scheduling problem. Please increase!");
+			System.exit(0);
+		}
+		
 		//ALAP
 		unplannedOperations = new TreeSet <Operation> ();
 		unplannedOperations.addAll (m_operations);
+		
+		//remove all via FDS fixed operations from 'unplanned operations'
+		for (Iterator<Operation> iter = unplannedOperations.iterator(); iter.hasNext();){
+			Operation op = iter.next();
+				if(op.getFixed() == true){
+					iter.remove();
+				}
+		}
+		
 		//set all latestStarts to Lmax-di for operations without successor
 		for (Iterator<Operation> iter = unplannedOperations.iterator(); iter.hasNext();) {
 			Operation selectedOperation = iter.next ();
