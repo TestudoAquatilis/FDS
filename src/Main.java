@@ -25,7 +25,7 @@ public class Main
 		System.err.println("--------------------------------");
 		System.err.println("overview operations (ASAP, ALAP)");
 		System.err.println("--------------------------------");
-		m_scheduling_problem.problemGraph().calculateMobility();
+		m_scheduling_problem.problemGraph().calculateMobility(m_scheduling_problem.getTimingConstraint());
 		for (Operation op : m_scheduling_problem.problemGraph().operations()){
 			System.err.println( "ID: " + op.getId() + " | NumOfPred: " + m_scheduling_problem.problemGraph().predecessor_map().get(op).size()+ " | NumOfSucc: " + m_scheduling_problem.problemGraph().successor_map().get(op).size() + " | soonest start: " + op.getStartSoonest() + " | latest start: " + op.getStartLatest() + " | mobility: " + op.getMobility());
 		}
