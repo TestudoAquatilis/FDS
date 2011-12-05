@@ -217,6 +217,7 @@ public class SchedulingProblem
 	{
 		while (true) {
 			m_problem_graph.calculateMobility (m_timing_constraint); 
+			m_ressource_graph.calculateAverageRessourceUsages ();
 
 			TreeSet <Operation> plannable_operations = m_problem_graph.getPlannableOperations ();
 
@@ -228,9 +229,25 @@ public class SchedulingProblem
 
 			for (Operation i_plannable_operation : plannable_operations) {
 				for (int i_time = i_plannable_operation.getStartSoonest (); i_time <= i_plannable_operation.getStartLatest (); i_time ++) {
-					double current_force = m_ressource_graph.getSelfForce (i_plannable_operation, i_time); 
-
+					double self_force = m_ressource_graph.getSelfForce (i_plannable_operation, i_time);
+					
 					//TODO: compute sum of forces of v_i
+
+					double sum_predecessor_forces = 0;
+					TreeSet <Operation> predecessors = m_problem_graph.getPredecessors (i_plannable_operation);
+
+					for (Operation i_predecessor : predecessors) {
+						sum_predecessor_forces += m_ressource_graph.getPredecessorForce (i_predecessor, i_time);
+					}
+
+					double sum_successor_forces = 0;
+					TreeSet <Operation> successors = m_problem_graph.getSuccessors (i_plannable_operation);
+
+					for (Operation i_successor : successors) {
+						sum_successor_forces += m_ressource_graph.getSuccessorForce (i_successor, i_time);
+					}
+
+					double current_force = self_force + sum_predecessor_forces + sum_successor_forces;
 
 					if (current_force < min_force) {
 						min_force     = current_force;

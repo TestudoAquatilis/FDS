@@ -91,6 +91,20 @@ public class ProblemGraph
 
 		return result;
 	}
+
+	public TreeSet <Operation> getPredecessors (Operation operation)
+	{
+		if (! m_operations.contains (operation)) return null;
+
+		return new TreeSet <Operation> (m_predecessor_map.get (operation));
+	}
+	
+	public TreeSet <Operation> getSuccessors (Operation operation)
+	{
+		if (! m_operations.contains (operation)) return null;
+
+		return new TreeSet <Operation> (m_successor_map.get (operation));
+	}
 	
 	//calculate soonest and latest start for every operation via ALAP and ASAP
 	public boolean calculateMobility(int Lmax){
