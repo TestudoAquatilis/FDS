@@ -33,8 +33,18 @@ public class Main
 		m_scheduling_problem.calculateFDSScheduling ();
 		printFDSSchedulingResult ();
 
-		// TODO: System.out.println ("Our preferred cake:");
-		// TODO: System.out.println (" ... ");
+		// TODO: uncomment after cake is chosen
+		// printPreferredCake ();
+	}
+
+	protected static void printPreferredCake ()
+	{
+		// TODO: choose cake...
+		System.out.println("-------------------------------------------------------");
+		System.out.println("|        Our preferred cake: ..........                |"); 
+		System.out.println("-------------------------------------------------------");
+		System.out.println();
+
 	}
 
 	protected static void printFDSSchedulingResult ()
@@ -45,6 +55,7 @@ public class Main
 		System.out.println();
 
 		System.out.println (m_scheduling_problem);
+		System.out.println();
 	}
 
 	protected static void testMobilityCalculation ()
