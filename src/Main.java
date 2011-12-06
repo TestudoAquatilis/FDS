@@ -16,10 +16,13 @@ public class Main
 
 			success = m_scheduling_problem.readFromFile (filename);
 
-			if (! success){ System.err.println ("Error reading from file " + filename); System.exit(0);}
+			if (! success){
+				System.err.println ("Error reading from file " + filename); 
+				System.exit (1);
+			}
 		} else {
 			System.err.println ("Error: no input file specified!");
-			System.exit(0);
+			System.exit (1);
 		}
 		
 		//test mobility calculation
@@ -111,5 +114,8 @@ public class Main
 
 			System.out.println (current_line);
 		}
+
+		// TODO: System.out.println ("Our preferred cake:");
+		// TODO: System.out.println (" ... ");
 	}
 }

@@ -231,8 +231,6 @@ public class SchedulingProblem
 				for (int i_time = i_plannable_operation.getStartSoonest (); i_time <= i_plannable_operation.getStartLatest (); i_time ++) {
 					double self_force = m_ressource_graph.getSelfForce (i_plannable_operation, i_time);
 					
-					//TODO: compute sum of forces of v_i
-
 					double sum_predecessor_forces = 0;
 					TreeSet <Operation> predecessors = m_problem_graph.getPredecessors (i_plannable_operation);
 
