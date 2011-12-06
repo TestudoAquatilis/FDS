@@ -16,9 +16,10 @@ public class Main
 
 			success = m_scheduling_problem.readFromFile (filename);
 
-			if (! success) System.err.println ("Error reading from file " + filename);
+			if (! success){ System.err.println ("Error reading from file " + filename); System.exit(0);}
 		} else {
 			System.err.println ("Error: no input file specified!");
+			System.exit(0);
 		}
 		
 		//test mobility calculation
