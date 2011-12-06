@@ -269,4 +269,51 @@ public class SchedulingProblem
 	public int getTimingConstraint() {
 		return m_timing_constraint;
 	}
+
+	public String toString () {
+		StringBuffer result = new StringBuffer ();
+
+		TreeMap <Integer, TreeSet <Operation>> scheduling = new TreeMap <Integer, TreeSet <Operation>> ();
+		for (int i_time = 0; i_time < m_timing_constraint; i_time ++) {
+			scheduling.put (i_time, new TreeSet <Operation> ());
+		}
+
+		for (Operation i_op : m_operations.values ()) {
+			TreeSet <Operation> scheduling_at_time = scheduling.get (i_op.getStartSoonest ());
+
+			scheduling_at_time.add (i_op);
+		}
+
+		result.append ("Time | Operations   | Ressource usage\n");
+		result.append ("-------------------------------------------------------\n");
+
+		for (int i_time = 0; i_time < m_timing_constraint; i_time ++) {
+			TreeSet <Operation> scheduling_at_time = scheduling.get (i_time);
+
+			StringBuffer current_line = new StringBuffer ();
+
+			current_line.append (i_time);
+			while (current_line.length () < 5) current_line.append (" ");
+			current_line.append ("|");
+
+			for (Operation i_op : scheduling_at_time) {
+				current_line.append (" ");
+				current_line.append (i_op.getId ());
+			}
+
+			while (current_line.length () < 20) current_line.append (" ");
+			current_line.append ("|");
+
+			for (Ressource i_res : m_ressources.values ()) {
+				current_line.append (" r" + i_res.getId () + ": ");
+				current_line.append (m_ressource_graph.getRessourceUsage (i_res, i_time) + ";");
+			}
+
+			current_line.append ('\n');
+
+			result.append (current_line);
+		}
+
+		return result.toString ();
+	}
 }
