@@ -41,7 +41,10 @@ public class Main
 	{
 		// TODO: choose cake...
 		System.out.println("-------------------------------------------------------");
-		System.out.println("|        Our preferred cake: .........                |"); 
+		System.out.println("|        Our preferred cakes:                         |"); 
+		System.out.println("|         - Apfelmuß-Gitter                           |");
+		System.out.println("|         - Quark-Aprikosen                           |"); 
+		System.out.println("|         - Kuchen des Hauses                         |"); 
 		System.out.println("-------------------------------------------------------");
 		System.out.println();
 
