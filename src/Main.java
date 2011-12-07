@@ -34,14 +34,17 @@ public class Main
 		printFDSSchedulingResult ();
 
 		// TODO: uncomment after cake is chosen
-		// printPreferredCake ();
+		printPreferredCake ();
 	}
 
 	protected static void printPreferredCake ()
 	{
 		// TODO: choose cake...
 		System.out.println("-------------------------------------------------------");
-		System.out.println("|        Our preferred cake: ..........                |"); 
+		System.out.println("|        Our preferred cakes:                         |"); 
+		System.out.println("|         - Apfelmus-Gitter                           |"); 
+		System.out.println("|         - Quark-Aprikosen                           |"); 
+		System.out.println("|         - Kuchen des Hauses                         |"); 
 		System.out.println("-------------------------------------------------------");
 		System.out.println();
 
