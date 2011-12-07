@@ -86,11 +86,36 @@ public class Operation
 
 	public double getProbability (int Timestep)
 	{
-		if (Timestep > m_start_latest) return 0;
+		if (Timestep >= m_start_latest + m_latency) return 0;
 		if (Timestep < m_start_soonest) return 0;
 
 		double result = 1.0 / (double) (getMobility () + 1);
 
+		if (m_latency == 1) return result;
+		
+		if (Timestep < m_start_soonest + m_latency) {
+			double max_factor = m_start_latest - m_start_soonest + 1;
+
+			double factor = (Timestep - m_start_soonest + 1);
+			if (factor > max_factor) factor = max_factor;
+
+			result *= factor;
+			return result;
+		}
+
+		if (Timestep >= m_start_latest) {
+			double max_factor = m_start_latest - m_start_soonest + 1;
+
+			double factor = (m_start_latest + m_latency - Timestep);
+			if (factor > max_factor) factor = max_factor;
+
+			result *= factor;
+			return result;
+		}
+
+		double factor = m_latency;
+
+		result *= factor;
 		return result;
 	}
 
