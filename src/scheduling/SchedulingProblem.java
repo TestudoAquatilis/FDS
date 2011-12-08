@@ -279,9 +279,11 @@ public class SchedulingProblem
 		}
 
 		for (Operation i_op : m_operations.values ()) {
-			TreeSet <Operation> scheduling_at_time = scheduling.get (i_op.getStartSoonest ());
+			for (int i_time = i_op.getStartSoonest (); i_time < i_op.getEndLatest (); i_time ++) {
+				TreeSet <Operation> scheduling_at_time = scheduling.get (i_time);
 
-			scheduling_at_time.add (i_op);
+				scheduling_at_time.add (i_op);
+			}
 		}
 
 		result.append ("Time | Operations   | Ressource usage\n");

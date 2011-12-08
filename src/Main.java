@@ -39,7 +39,6 @@ public class Main
 
 	protected static void printPreferredCake ()
 	{
-		// TODO: choose cake...
 		System.out.println("-------------------------------------------------------");
 		System.out.println("|        Our preferred cakes:                         |"); 
 		System.out.println("|         - Apfelmuß-Gitter                           |");
