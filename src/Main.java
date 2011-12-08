@@ -33,16 +33,13 @@ public class Main
 		m_scheduling_problem.calculateFDSScheduling ();
 		printFDSSchedulingResult ();
 
-		// TODO: uncomment after cake is chosen
 		// printPreferredCake ();
 	}
 
 	protected static void printPreferredCake ()
 	{
 		System.out.println("-------------------------------------------------------");
-		System.out.println("|        Our preferred cakes:                         |"); 
-		System.out.println("|         - Apfelmuß-Gitter                           |");
-		System.out.println("|         - Quark-Aprikosen                           |"); 
+		System.out.println("|        Our preferred cake:                          |"); 
 		System.out.println("|         - Kuchen des Hauses                         |"); 
 		System.out.println("-------------------------------------------------------");
 		System.out.println();
